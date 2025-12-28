@@ -1,8 +1,8 @@
 ---
-import { loadPyodide } from "pyodide";
-
-const pyodide = await loadPyodide();
-
-
-
+import PlaygroundComponent from "../components/playgroundComponent.tsx";
+import MainLayout from "../layouts/mainLayout.astro";
 ---
+
+<MainLayout>
+    <PlaygroundComponent client:only="react" />
+</MainLayout>
