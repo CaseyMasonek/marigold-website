@@ -1,6 +1,6 @@
 import {loadPyodide} from "pyodide";
 import Editor from "@monaco-editor/react";
-import {type ChangeEvent, useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import '../styles/global.css'
 import {Button} from "@/components/ui/button.tsx";
 import {CodeIcon, PlayIcon} from "lucide-react";
@@ -39,6 +39,7 @@ putint (factorial 5);`
     const [out,setOut] = useState<string[]>([]);
     const [mgCode,setMgCode] = useState(initialCode);
     const [pyodide,setPyodide] = useState<any>();
+    const [isCodeRunning,setIsCodeRunning] = useState<boolean>(false);
 
     useEffect(() => {
         const initPyodide = async () => {
@@ -57,6 +58,7 @@ putint (factorial 5);`
 
     const runCode = () => {
         setOut([])
+        setIsCodeRunning(true)
 
         const getCode = async () => {
             const res = await fetch("http://localhost:8000",{
@@ -80,14 +82,15 @@ putint (factorial 5);`
         }
 
         getCode();
+        setIsCodeRunning(false)
     }
 
     return (
         <div className="grid grid-cols-2">
             <div className={'m-3'}>
                 <Editor
-                    height={'100vh'}
-                    theme={""}
+                    height={'90vh'}
+                    theme={"gh-light"}
                     language={"marigold"}
                     defaultValue={mgCode}
                     onMount={(editor,monaco) => {
@@ -103,7 +106,7 @@ putint (factorial 5);`
                         <h1 className={"text-2xl inline align-middle"}>Playground</h1>
                     </div>
                     <div className={"inline"}>
-                        <Button onClick={runCode} className={"m-3"}><PlayIcon />Run</Button>
+                        <Button onClick={runCode} disabled={isCodeRunning} className={"m-3"}><PlayIcon />Run</Button>
                     </div>
                 </div>
                 <hr />

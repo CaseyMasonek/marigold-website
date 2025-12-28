@@ -8,6 +8,7 @@
 
 @theme {
     --font-sans: 'Inter', 'sans-serif';
+    --font-logo: 'Telegraf', 'Inter', 'sans-serif';
 }
 
 @theme inline {

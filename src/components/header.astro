@@ -1,8 +1,26 @@
 ---
+import { Button } from "./ui/button";
 
+const buttons = [
+    {text:'Install',link:'/install'},
+    {text:'Docs',link:'/docs'},
+    {text:'GitHub',link:'https://github.com/CaseyMasonek/marigold'},
+    {text:'Playground',link:'/playground'},
+]
 ---
 
-<div class="p-3">
-    <h1 class="text-3xl">Marigold</h1>
+<div class="p-3 flex flex-row">
+    <a href="/">
+        <div>
+            <h1 class="text-3xl font-logo font-black">Marigold</h1>
+        </div>
+    </a>
+    <div class="flex w-[50%] ml-3">
+        {buttons.map((button, index) => (
+            <a href={button.link}>
+                <Button variant="ghost" className="mr-2">{button.text}</Button>
+            </a>
+        ))}
+    </div>
 </div>
 <hr class="" />
