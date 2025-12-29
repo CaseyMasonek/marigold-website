@@ -3,8 +3,9 @@ import DocsLayout from "@/layouts/docsLayout.astro";
 import {BookMarkedIcon} from "lucide-react";
 import Cell from "@/components/cell.tsx";
 import MainLayout from "@/layouts/mainLayout.astro";
+import { getCollection } from 'astro:content';
 
-const docsPages = Object.values(import.meta.glob('./*.mdx',{eager: true}))
+const docs = await getCollection('docs');
 
 ---
 
@@ -17,15 +18,13 @@ const docsPages = Object.values(import.meta.glob('./*.mdx',{eager: true}))
         <br />
         <div class="prose">
         <ul>
-        {docsPages.map((doc) => (
+        {docs.map((doc) => (
                 <li>
-                    <a href={doc.url}>{doc.frontmatter.title}</a>
+                    <a href={'/docs/'+doc.id}>{doc.data.title}</a>
                 </li>
             ))}
         </ul>
         </div>
     </div>
-
-    <Cell code='put "hi";' client:only="react" />
 </MainLayout>
 

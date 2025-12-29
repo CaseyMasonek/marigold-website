@@ -82,8 +82,8 @@ export default function Cell({code}:{code:string}) {
 
     return (
         <div className="w-[40%] border-2 rounded-lg m-3">
-            <div className="h-10 bg-accent flex items-center justify-end mb-2">
-                <p className={"absolute left-10 text-sm"}>marigold</p>
+            <div className="h-10 bg-accent flex items-center justify-end mb-2 relative">
+                <p className={"absolute left-2 text-sm"}>marigold</p>
                 <Button
                     onClick={runCode}
                     variant={"ghost"}

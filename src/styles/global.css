@@ -8,8 +8,14 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-    --font-sans: 'Inter', 'sans-serif';
-    --font-logo: 'Telegraf', 'Inter', 'sans-serif';
+    --font-sans: 'Inter', sans-serif;
+    --font-logo: 'Telegraf', 'Inter', sans-serif;
+}
+
+@layer utilities {
+    h1, h2, h3 {
+        @apply scroll-mt-16;
+    }
 }
 
 @theme inline {

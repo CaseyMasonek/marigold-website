@@ -1,0 +1,12 @@
+---
+const {depth} = Astro.props
+---
+{depth == 0 && <li><slot /></li>}
+{depth > 0 && (
+    <ul>
+        <Astro.self depth={depth - 1}>
+            <slot />
+        </Astro.self>
+    </ul>
+)}
+

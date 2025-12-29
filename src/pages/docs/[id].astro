@@ -1,0 +1,32 @@
+---
+import { Sidebar, SidebarProvider } from "@/components/ui/sidebar";
+import {getCollection, getEntry, render} from "astro:content";
+import DocsLayout from "@/layouts/docsLayout.astro";
+import ListItem from "@/components/listItem.astro";
+
+export async function getStaticPaths() {
+    const docs = await getCollection('docs');
+    return docs.map((docPage) => {return {params: {id: docPage.id},props:{docPage}}})
+}
+
+const { docPage } = Astro.props;
+
+const {Content, headings} = await render(docPage)
+
+---
+
+<DocsLayout>
+    <div class="flex flex-row">
+        <div class="w-[20%] overflow-scroll sticky top-16 h-[calc(100dvh-4rem)] bg-accent p-5 prose">
+            <h3>On this page</h3>
+            {headings.map(heading => (
+                    <ListItem depth={heading.depth}>
+                        <a href={'#'+heading.slug}>{heading.text}</a>
+                    </ListItem>
+            ))}
+        </div>
+        <div class="p-5 grow overflow-scroll">
+            <Content />
+        </div>
+    </div>
+</DocsLayout>
