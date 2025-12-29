@@ -2,5 +2,7 @@
 import MainLayout from "./mainLayout.astro"
 ---
 <MainLayout>
-    <slot />
+    <div class="prose p-5 max-w-none prose-code:bg-accent prose-hr:m-0 prose-p:max-w-[65ch]">
+        <slot />
+    </div>
 </MainLayout>

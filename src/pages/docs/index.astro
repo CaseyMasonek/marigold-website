@@ -2,25 +2,30 @@
 import DocsLayout from "@/layouts/docsLayout.astro";
 import {BookMarkedIcon} from "lucide-react";
 import Cell from "@/components/cell.tsx";
+import MainLayout from "@/layouts/mainLayout.astro";
 
-const docsPages = Object.values(import.meta.glob('./*.md',{eager: true}))
+const docsPages = Object.values(import.meta.glob('./*.mdx',{eager: true}))
 
 ---
 
-<DocsLayout>
+<MainLayout>
     <div class="p-3">
         <div class="flex items-center gap-x-1">
             <BookMarkedIcon className="inline" />
             <h1 class="text-3xl">Documentation</h1>
         </div>
         <br />
-        {
-            docsPages.map((doc) => (
-                <a href={doc.url}>{doc.frontmatter.title}</a>
-            ))
-        }
+        <div class="prose">
+        <ul>
+        {docsPages.map((doc) => (
+                <li>
+                    <a href={doc.url}>{doc.frontmatter.title}</a>
+                </li>
+            ))}
+        </ul>
+        </div>
     </div>
-    <Cell code=`put "Hello, World!";` client:only="react" />
 
-</DocsLayout>
+    <Cell code='put "hi";' client:only="react" />
+</MainLayout>
 

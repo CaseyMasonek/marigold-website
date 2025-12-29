@@ -1,0 +1,39 @@
+---
+layout: "@/layouts/docsLayout.astro"
+title: 'Recursive Functions'
+---
+
+import Cell from "../../components/cell.tsx";
+
+# Recursive Functions
+
+In pure lambda calculus, there are no named functions. This is a problem for recursion, since in means that
+functions are not able to reference themselves. Luckily, there are fixed point combinators (in our case, Z)
+which can achieve a recursive effect.
+
+## Lambda Calculus representation
+
+`defr f(n) {...} = Z (@self.@n.{...})`
+
+## Usage
+
+To define a recursive function, you must use the `defr` keyword. Additionally, instead of referencing the
+name of the function for the recursive call, use the `self` keyword.
+
+## Example
+
+[Guards](/docs/guards) work well for base cases!
+
+<Cell code={`defr fibonacci(n) {
+    # Return the nth fibonacci number #
+
+    guard (n < 2) n;
+
+    (self n--) + (self n - 2);
+}
+
+putint (fibonacci 10);`} client:only={"react"} />
+
+## See also
+- [Functions](/docs/functions)
+- [Anonymous Functions](/docs/lambdas)

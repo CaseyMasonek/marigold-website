@@ -3,7 +3,7 @@ import Editor from "@monaco-editor/react";
 import {useEffect, useState} from "react";
 import '../styles/global.css'
 import {Button} from "@/components/ui/button.tsx";
-import {CodeIcon, PlayIcon} from "lucide-react";
+import {PlayIcon} from "lucide-react";
 
 export default function Cell({code}:{code:string}) {
     function registerLanguage(monaco: typeof import("monaco-editor")) {
@@ -30,8 +30,11 @@ export default function Cell({code}:{code:string}) {
     const [mgCode,setMgCode] = useState(code);
     const [pyodide,setPyodide] = useState<any>();
     const [isCodeRunning,setIsCodeRunning] = useState<boolean>(false);
+    const [height,setHeight] = useState("0");
 
-    const height = ((code.split("\n").length * 2)+2).toString() + "vh"
+    useEffect(() => {
+        setHeight(((mgCode.split("\n").length * 2)+2).toString() + "vh")
+    },[mgCode])
 
     useEffect(() => {
         const initPyodide = async () => {
@@ -100,7 +103,7 @@ export default function Cell({code}:{code:string}) {
                 }}
                 onChange={(e) => setMgCode(e ?? "")} />
             <hr className="" />
-            {out.map((item,index) => (<p className={"p-2"}>{item}</p>))}
+            {out.map((item,index) => (<p className={"m-3 mb-2 mt-3"}>{item}</p>))}
         </div>
     )
 }

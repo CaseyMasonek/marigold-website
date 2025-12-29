@@ -1,0 +1,32 @@
+---
+layout: "@/layouts/docsLayout.astro"
+title: 'Pipelines'
+---
+
+import Cell from "../../components/cell.tsx";
+
+# Pipelines
+
+Inspired by F# and Elixir, Marigold makes heavy use of pipelines. Pipelines are great for the clean flow of data,
+and help declutter large function applications. Pipes take in a value, and pass it in as the first value to a function.
+
+## Usage
+
+Unlike other languages, Marigold just uses `|` to denote a pipeline. So
+
+`a | b c d` is equivalent to `b a c d`.
+
+Often, pipes are changes.
+
+`a | b | c` is equivalent to `c (b a)`
+
+## Example
+
+<Cell code={`10
+| RANGE
+| MAP @n.n*n
+| putlist;`} client:only={"react"} />
+
+## See also
+- [|=](/docs/operators)
+- [Recommended Patterns](/docs/patterns)

@@ -1,0 +1,31 @@
+---
+layout: "@/layouts/docsLayout.astro"
+title: 'Functions'
+---
+
+import Cell from "../../components/cell.tsx";
+
+# Functions
+
+Functions are defined using the `def` keyword. While every function in Marigold is technically unary, the compiler will
+automatically curry your arguments, essentially creating functions of any arity.
+
+Functions always return the last *value* of the function. While this typically refers to the last line of the function, if
+statements and pipelines also act as return values.
+
+## Usage
+
+``def [function_name]([comma seperated arguments]) { [multiline expression] }``
+
+## Example
+
+<Cell code={`def add(a,b) {
+    a + b;
+}
+
+putint ((add 2) 3);`} client:only={"react"} />
+
+## See also
+
+- [Recursive Functions](/docs/recursive_functions)
+- [Anonymous Functions](/docs/lambdas)

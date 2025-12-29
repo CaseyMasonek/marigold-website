@@ -3,18 +3,20 @@ layout: "@/layouts/docsLayout.astro"
 title: 'If statements'
 ---
 
+import Cell from "../../components/cell.tsx";
+
 # If statements
 
 If statements are used to control the flow of logic in a script. 
 It is important to note that they return a value, and thus can be
 used as the return value of a function.
 
-### Lambda Calculus representation
+## Lambda Calculus representation
 `
 @bxy.b x y
 `
 
-### Usage
+## Usage
 
 ``
 if ([condition]) {
@@ -33,10 +35,17 @@ Alternatively, either multiline expression can be replaced by a single expressio
 
 `if ([condition])  [value] else [value]`
 
+## Example
 
-### Example
+<Cell code={`def isAdult(age) {
+    if (age < 18) "kid" else {
+        if (age < 65) "adult" else "senior"
+    }
+}
 
-### See also
+put (isAdult 25);`} client:only={"react"} />
 
-- [guard](/docs/guard)
+## See also
+
+- [Guards](/docs/guards)
 - [IF](/docs/if_function)

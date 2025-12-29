@@ -1,0 +1,49 @@
+---
+layout: "@/layouts/docsLayout.astro"
+title: 'Anonymous Functions/lambdas'
+---
+
+import Cell from "../../components/cell.tsx";
+
+# Anonymous Functions/Lambdas
+
+Lambdas are the namesake of lambda calculus, which is what Marigold is built off of. Lambdas are known as anonymous
+functions because they act like regular [functions](/docs/functions) but without names. Every data type in Marigold
+is secretly a lambda:
+
+<Cell code={`putbool (0 == @fx.x);`} client:only="react" />
+
+## Usage
+
+A lambda is comprised of local variables and a term. You can think of a lambda like this:
+
+`@x.x+1`
+
+is equivalent to
+
+`
+def add(x) {
+    x + 1;
+}
+`
+
+## Currying
+
+Lambdas technically only takes in one input, but Marigold will automatically curry them, meaning:
+
+`@ab.a+b`
+
+is just shorthand for
+
+`@a.@b.a+b`
+
+## Example
+
+Lambdas are very useful when it comes to mapping and pipelines!
+
+<Cell code={`[1,2,3,4,5] | MAP (@n.n*n) | putlist;`} client:only="react" />
+
+## See also
+
+- [Functions](/docs/functions)
+- [Recursive Functions](/docs/recursive_functions)

@@ -1,0 +1,92 @@
+---
+layout: "@/layouts/docsLayout.astro"
+title: 'Operators'
+---
+
+import Cell from "../../components/cell.tsx";
+
+# Operators
+
+Operators, while breaking the pattern of `[function] [arguments]`, do tremendously increase both
+readability and lightweightness. There are many operators in Marigold, some of which are unary
+but most of which are binary.
+
+## +
+
+Addition is represented as `a + b`. This is equivalent to `ADD a b`
+
+## -
+
+Subtraction is represented as `a - b`. This is equivalent to `SUB a b`
+
+## *
+
+Multiplication is represented as `a * b`. This is equivalent to `MULT a b`
+
+## //
+
+Floor division is represented as `a // b`. This is equivalent to `DIV a b`
+
+## &&
+
+And is represented as `a && b`. This is equivalent to `AND a b`
+
+## ||
+
+Or is represented as `a || b`. This is equivalent to `OR a b`
+
+## |
+
+Pipelines are represented as `a | b;`. For more details, see [Pipelines].(/docs/pipelines)
+
+## ==
+
+Equalities are represented as `a == b`. This is equivalent to `EQ a b`
+
+## !=
+
+Inequalities are represented as `a != b`. This is equivalent to `NOT (EQ a b)`
+
+## >
+
+Greater than is represented as `a > b`. This is equivalent to `GT a b`
+
+## >=
+
+Greater than or equal is represented as `a >= b`. This is equivalent to `GTE a b`
+
+## \<
+
+Less than is represented as `a < b`. This is equivalent to `LT a b`
+
+## \<=
+
+Less than or equal is represented as `a <= b`. This is equivalent to `LTE a b`
+
+## =
+
+Variables are set like `[varname] = [value];`. For more details, see [Variables](/docs/variables)
+
+## +=
+
+`a += b` is shorthand for `a = a + b`
+
+## -=
+
+`a -= b` is shorthand for `a = a - b`
+
+## *=
+
+`a *= b` is shorthand for `a = a * b`
+
+## //=
+
+`a += b` is shorthand for `a = a // b`
+
+## |=
+
+`a |= b` is shorthand for `a = a | b`
+
+## See also
+- [Pipelines](/docs/pipelines)
+- [Variables](/docs/variables)

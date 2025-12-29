@@ -1,0 +1,31 @@
+---
+layout: "@/layouts/docsLayout.astro"
+title: 'Guards'
+---
+
+import Cell from "../../components/cell.tsx";
+
+# Guards
+
+The `guard` keyword is used to prevent excessive nesting in functions. It acts like an early return
+for the function, wrapping the following lines in an if statement.
+
+## Usage
+
+`guard ([condition]) [value];`
+
+## Example
+
+<Cell code={`defr factorial(n) {
+    # Calculate n! #
+
+    guard (n == 0) 1;
+
+    n * (self n--);
+}
+
+putint (factorial 5);`} client:only={"react"} />
+
+## See also
+- [If statements](/docs/if)
+- [Recursive Functions](/docs/recursive_functions)
