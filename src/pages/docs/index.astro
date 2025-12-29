@@ -1,8 +1,11 @@
 ---
 import DocsLayout from "@/layouts/docsLayout.astro";
 import {BookMarkedIcon} from "lucide-react";
----
+import Cell from "@/components/cell.tsx";
 
+const docsPages = Object.values(import.meta.glob('./*.md',{eager: true}))
+
+---
 
 <DocsLayout>
     <div class="p-3">
@@ -11,7 +14,13 @@ import {BookMarkedIcon} from "lucide-react";
             <h1 class="text-3xl">Documentation</h1>
         </div>
         <br />
-        <p>Lorem ipsum</p>
+        {
+            docsPages.map((doc) => (
+                <a href={doc.url}>{doc.frontmatter.title}</a>
+            ))
+        }
     </div>
+    <Cell code=`put "Hello, World!";` client:only="react" />
+
 </DocsLayout>
 

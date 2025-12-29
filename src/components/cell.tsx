@@ -5,7 +5,7 @@ import '../styles/global.css'
 import {Button} from "@/components/ui/button.tsx";
 import {CodeIcon, PlayIcon} from "lucide-react";
 
-export default function PlaygroundComponent() {
+export default function Cell({code}:{code:string}) {
     function registerLanguage(monaco: typeof import("monaco-editor")) {
         monaco.languages.register({ id: "marigold" });
 
@@ -26,20 +26,12 @@ export default function PlaygroundComponent() {
         });
     }
 
-    const initialCode = `defr factorial(n) {
-    # Calculate n! #
-    
-    guard (n == 0) 1;
-    
-    n * (self n--);
-}
-
-putint (factorial 5);`
-
     const [out,setOut] = useState<string[]>([]);
-    const [mgCode,setMgCode] = useState(initialCode);
+    const [mgCode,setMgCode] = useState(code);
     const [pyodide,setPyodide] = useState<any>();
     const [isCodeRunning,setIsCodeRunning] = useState<boolean>(false);
+
+    const height = ((code.split("\n").length * 2)+2).toString() + "vh"
 
     useEffect(() => {
         const initPyodide = async () => {
@@ -86,34 +78,29 @@ putint (factorial 5);`
     }
 
     return (
-        <div className="grid grid-cols-2">
-            <div className={'m-3'}>
-                <Editor
-                    height={'90vh'}
-                    theme={"gh-light"}
-                    language={"marigold"}
-                    defaultValue={mgCode}
-                    onMount={(editor,monaco) => {
-                        registerLanguage(monaco);
-                    }}
-                    onChange={(e) => setMgCode(e ?? "")} />
-            </div>
+        <div className="w-[40%] border-2 rounded-lg m-3">
+            <div className="h-10 bg-accent flex items-center justify-end mb-2">
+                <p className={"absolute left-10 text-sm"}>marigold</p>
+                <Button
+                    onClick={runCode}
+                    variant={"ghost"}
+                    disabled={isCodeRunning}
+                    className={"m-3"}>
 
-            <div className={"border-l-1 w-full"}>
-                <div className={'inline-flex flex-row justify-between align-middle items-center w-full p-1'}>
-                    <div className={'grid grid-cols-2 w-20 pl-3'}>
-                        <CodeIcon className="mt-1" />
-                        <h1 className={"text-2xl inline align-middle"}>Playground</h1>
-                    </div>
-                    <div className={"inline"}>
-                        <Button onClick={runCode} disabled={isCodeRunning} className={"m-3"}><PlayIcon />Run</Button>
-                    </div>
-                </div>
-                <hr />
-                <div className={"p-3"}>
-                    {out.map((item,index) => (<p>{item}</p>))}
-                </div>
+                    <PlayIcon size={8} /> Run
+                </Button>
             </div>
+            <Editor
+                height={height}
+                theme={"gh-light"}
+                language={"marigold"}
+                defaultValue={mgCode}
+                onMount={(editor,monaco) => {
+                    registerLanguage(monaco);
+                }}
+                onChange={(e) => setMgCode(e ?? "")} />
+            <hr className="" />
+            {out.map((item,index) => (<p className={"p-2"}>{item}</p>))}
         </div>
     )
 }
