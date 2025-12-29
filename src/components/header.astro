@@ -1,5 +1,6 @@
 ---
 import { Button } from "./ui/button";
+import Search from "@/components/search.astro";
 
 const buttons = [
     {text:'Install',link:'/install'},
@@ -9,7 +10,8 @@ const buttons = [
 ]
 ---
 
-<div class="p-3 flex flex-row">
+<div class="flex justify-between">
+<div class="p-3 flex flex-row w-[70%]">
     <a href="/">
         <div>
             <h1 class="text-3xl font-logo font-black">Marigold</h1>
@@ -21,6 +23,10 @@ const buttons = [
                 <Button variant="ghost" className="mr-2">{button.text}</Button>
             </a>
         ))}
+    </div>
+</div>
+    <div class="p-3">
+        <Search />
     </div>
 </div>
 <hr class="" />

@@ -15,6 +15,7 @@
       "@/*": [
         "./src/*"
       ]
-    }
+    },
+    "allowJs": true // required, and included with all Astro templates
   }
 }

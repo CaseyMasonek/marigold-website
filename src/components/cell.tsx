@@ -56,7 +56,7 @@ export default function Cell({code}:{code:string}) {
         setIsCodeRunning(true)
 
         const getCode = async () => {
-            const res = await fetch("http://localhost:8000",{
+            const res = await fetch(import.meta.env.PUBLIC_SERVER_URL, {
                 method:"POST",
                 mode:"cors",
                 headers: {

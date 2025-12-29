@@ -1,0 +1,30 @@
+---
+import '@docsearch/css';
+
+const {
+    PUBLIC_ALGOLIA_APP_ID,
+    PUBLIC_ALGOLIA_API_KEY,
+    PUBLIC_ALGOLIA_INDEX_NAME,
+} = import.meta.env;
+---
+
+<div
+        id="docsearch"
+        data-app-id={PUBLIC_ALGOLIA_APP_ID}
+        data-api-key={PUBLIC_ALGOLIA_API_KEY}
+        data-index-name={PUBLIC_ALGOLIA_INDEX_NAME}
+></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@docsearch/js@4"></script>
+<script is:inline type="module">
+
+
+    const el = document.getElementById('docsearch');
+
+    docsearch({
+        container: '#docsearch',
+        appId: el.dataset.appId,
+        apiKey: el.dataset.apiKey,
+        indexName: el.dataset.indexName,
+    });
+</script>
