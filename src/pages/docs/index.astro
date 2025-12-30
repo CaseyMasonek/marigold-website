@@ -1,9 +1,10 @@
 ---
 import DocsLayout from "@/layouts/docsLayout.astro";
 import {BookMarkedIcon} from "lucide-react";
-import Cell from "@/components/cell.tsx";
+import { Item, ItemContent, ItemActions, ItemTitle } from "@/components/ui/item";
 import MainLayout from "@/layouts/mainLayout.astro";
-import { getCollection } from 'astro:content';
+import { ChevronRight } from "lucide-react";
+import {getCollection, render} from 'astro:content';
 
 const docs = await getCollection('docs');
 
@@ -16,14 +17,19 @@ const docs = await getCollection('docs');
             <h1 class="text-3xl">Documentation</h1>
         </div>
         <br />
-        <div class="prose">
-        <ul>
+        <div class="grid grid-cols-3 gap-2">
         {docs.map((doc) => (
-                <li>
-                    <a href={'/docs/'+doc.id}>{doc.data.title}</a>
-                </li>
+                    <a href={'/docs/'+doc.id}>
+                        <Item variant={"outline"} className="hover:bg-accent duration-100 animate-in rounded-lg">
+                            <ItemContent>
+                                {doc.data.title}
+                            </ItemContent>
+                            <ItemActions>
+                                <ChevronRight className="size-sm" />
+                            </ItemActions>
+                        </Item>
+                    </a>
             ))}
-        </ul>
         </div>
     </div>
 </MainLayout>
