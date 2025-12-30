@@ -12,7 +12,7 @@ export default function Cell({code}:{code:string}) {
         monaco.languages.setMonarchTokensProvider("marigold", {
             tokenizer: {
                 root: [
-                    [/\b(def|defr|if|else|guard|module|use|alias|true|false|self)\b/, "keyword"],
+                    [/\b(def|defr|if|else|guard|module|use|alias|self|true|false|nil)\b/, "keyword"],
                     [/\b(PAIR)\b/, "constant"],
                     [/\d+/, "number"],
                     [/"([^"\\]|\\.)*$/, "string.invalid"],
@@ -40,7 +40,7 @@ export default function Cell({code}:{code:string}) {
         const initPyodide = async () => {
             const p = await loadPyodide({
                 indexURL: "https://cdn.jsdelivr.net/pyodide/v0.29.0/full/",
-                stdout: (text) => setOut(out.concat([text])),
+                stdout: (text) => setOut(l => l.concat([text])),
                 stderr: (text) => setOut(out.concat([text])),
                 stdin: () => prompt(out[-1])
             });
@@ -52,7 +52,7 @@ export default function Cell({code}:{code:string}) {
     },[])
 
     const runCode = () => {
-        setOut(["Loading..."])
+        setOut([])
         setIsCodeRunning(true)
 
         const getCode = async () => {
@@ -95,7 +95,8 @@ export default function Cell({code}:{code:string}) {
                     disabled={isCodeRunning}
                     className={"m-3"}>
 
-                    <PlayIcon size={8} /> Run
+
+                    <PlayIcon size={8} /> {isCodeRunning ? "Loading..." : "Run"}
                 </Button>
             </div>
             <Editor

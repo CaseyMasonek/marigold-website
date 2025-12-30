@@ -1,0 +1,226 @@
+---
+title: Lists
+---
+
+import Cell from "../src/components/cell.tsx";
+
+# Lists
+
+Lists are a fundamental data structure in Marigold. They use the Church list encoding, which forces a fold.
+
+## nil
+
+`nil` (or `NIL` using the builtin naming convention) represents an empty list. It is equivalent to `[]`.
+
+<Cell code="putlist nil;" client:only="react" />
+
+### Lambda Calculus representation
+
+In lambda calculus, `nil` is represented as
+
+`@ht.t`
+
+(Note that this is the same as `false`, `0`, and `""`)
+
+<Cell code={`nil
+| putlist
+| putbool
+| putint;`} client:only="react" />
+
+## CONS
+
+`CONS` (short for constructor) is a builtin function that represents a list node. In Marigold, lists
+are nodes with a **head** and a **tail**. The head of the node is the value of that item in the list, while
+the tail of the list is a node representing the next item in the list.
+
+Here's an example: The list `[1,2,3]` is represented in Marigold as
+
+`CONS 1 (CONS 2 (CONS 3 NIL));`
+
+In this example, the list is a list node with head `1` and tail `CONS 2 (CONS 3 NIL)`.
+The head of `CONS 2 (CONS 3 NIL)` is `2`, and the tail is `CONS 3 NIL`, whose tail is `NIL`,
+which indicates the end of the list.
+
+
+<Cell code={`mylist = CONS 1 (CONS 2 (CONS 3 NIL));
+
+put "Original list:";
+putlist mylist;
+
+put "HEAD of mylist:";
+putint (HEAD mylist);
+
+put "TAIL of mylist:";
+putlist (TAIL mylist);`} client:only={"react"} />
+
+### Lambda Calculus representation
+
+`@ht.@fx f h (t f x)`
+
+## Right Folds
+
+What makes Church lists special is that they force a **fold**. A fold is
+a function that takes in a list, an accumulation function, and an initial value for the accumulator,
+and reduces the list to a single value. In javascript, this is the `reduce` method.
+
+### Structure
+`[list] [accumulation function (e.g. @hr.[term])] [initial r value]`
+
+### Example
+
+The sum of a list is the perfect example of a fold, as it turns a list into a single value.
+Let's make our accumulation function. Typically, the head of the is denoted by the variable `h`,
+and the accumulator is denoted with `r`. The function will take in h and r, and return the new value for r
+for the next item in the list. Since it is a *right fold*, h will start as the last item of the list.
+
+So, for a summation of a list, our accumulation function will look like `@hr.h+r`. We can interpret r as
+the sum of the tail of the list of the current node, so the sum of the list at the current
+list node would be `h + r`. The initial r value will be `0`, since the sum of the empty list should be 0.
+
+<Cell code={`mylist = [1,2,3,4,5];
+accumulation_fn = @hr.h + r;
+initial_r = 0;
+
+sum = mylist accumulation_fn initial_r;
+
+putint sum;`} client:only={"react"} />
+
+## List functions
+
+### HEAD
+Gets the head of a list node
+
+#### Usage
+`HEAD [list]`
+
+#### Lambda Calculus
+`@l.l (@hr.h) NIL`
+
+### TAIL
+Gets the tail of a list node
+
+#### Usage
+`TAIL [list]`
+
+#### Lambda Calculus
+`@l.@cn.l(@hr.@g.g h (r c)) (@x.n) NIL`
+
+### LEN
+Gets the length of a list
+
+#### Usage
+`LEN [list]`
+
+#### Lambda Calculus
+`@l.l (@hr.SUCC r) 0`
+
+### SUM
+
+Adds every item in the list.
+
+#### Usage
+`SUM [list]`
+
+#### Lambda Calculus
+`@l.l (@hr.h+r) 0`
+
+#### Usage
+`TAIL [list]`
+
+#### Lambda Calculus
+`@l.@cn.l(@hr.@g.g h (r c)) (@x.n) NIL`
+
+### INDEX
+Gets the item in a list at a specified index.
+
+#### Usage
+`INDEX [list] [index]`
+
+#### Lambda Calculus
+`@li.HEAD (i TAIL l)`
+
+### MAP
+Maps every item in a list to a new item by a given function.
+
+#### Usage
+`MAP [list] [function]`
+
+#### Lambda Calculus
+`@lf.l (@hr.CONS (f h) r) NIL`
+
+### FILTER
+Takes in a list and a condition, and returns a list only
+containing items from the original list that satisfy the condition.
+
+#### Usage
+`FILTER [list] [condition]`
+
+#### Lambda Calculus
+`@lc.l (@hr.c h (CONS h r) r) NIL`
+
+### FIND
+Returns the index of the first occurrence of an item in a list.
+
+#### Usage
+`FIND [list] [item]`
+
+#### Lambda Calculus
+`@li. Z (@fx.EQ (HEAD x) i 0 (SUCC (f (TAIL x)))) l`
+
+### REVERSE
+Reverses a list.
+
+#### Usage
+`REVERSE [list]`
+
+#### Lambda Calculus
+`@l.RANGE (LEN l) (@hr.CONS (INDEX l (SUB (PRED (LEN l)) h)) r) NIL`
+
+### UPDATE
+Replaces the item in a list at a specified index
+
+#### Usage
+`UPDATE [list] [index] [item]`
+
+#### Lambda Calculus
+`@liv.RANGE (LEN l) (@hr.EQ h i (CONS v r) (CONS (INDEX l h) r)) NIL`
+
+### PUSH
+Appends an item to the end of the list
+
+#### Usage
+`PUSH [list] [item]`
+
+#### Lambda Calculus
+`@li.REVERSE (CONS i (REVERSE l))`
+
+### FOLD
+Runs a *left* fold on a list
+
+#### Usage
+`FOLD [list] [function] [inital r value]`
+
+#### Lambda Calculus
+`@lfx.REVERSE (REVERSE l f x)`
+
+### SAME
+Determines if two lists are equal
+
+#### Usage
+`SAME [list] [list]`
+
+#### Lambda Calculus
+`@ab.MAP (RANGE (LEN a)) (@i.EQ (INDEX a i) (INDEX b i)) (@hr.h r FALSE) TRUE`
+
+### RANGE
+Returns a list from 0 to n-1
+
+#### Usage
+`RANGE [number]`
+
+#### Lambda Calculus
+`@n.Z (@fx.ISZERO x NIL (CONS (SUB n x) (f (PRED x)))) n`
+
+## See also
+- [Integers](/docs/ints)
+- [Strings](/docs/strings)

@@ -28,7 +28,7 @@ name of the function for the recursive call, use the `self` keyword.
 
     guard (n < 2) n;
 
-    (self n--) + (self n - 2);
+    (self (n - 1)) + (self (n - 2));
 }
 
 putint (fibonacci 10);`} client:only={"react"} />

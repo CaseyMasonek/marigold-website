@@ -12,7 +12,7 @@ export default function PlaygroundComponent() {
         monaco.languages.setMonarchTokensProvider("marigold", {
             tokenizer: {
                 root: [
-                    [/\b(def|defr|if|else|guard|module|use|alias|true|false|self)\b/, "keyword"],
+                    [/\b(def|defr|if|else|guard|module|use|alias|true|false|self|nil)\b/, "keyword"],
                     [/\b(PAIR)\b/, "constant"],
                     [/\d+/, "number"],
                     [/"([^"\\]|\\.)*$/, "string.invalid"],
@@ -79,6 +79,8 @@ putint (factorial 5);`
 
                 const output = pyodide.runPython(pycode)
 
+                if (output) {}
+
                 console.log(output);
             } else {
                 setOut(["Syntax error! (Maybe you forgot a semicolon?) "]);
@@ -110,7 +112,7 @@ putint (factorial 5);`
                         <h1 className={"text-2xl inline align-middle"}>Playground</h1>
                     </div>
                     <div className={"inline"}>
-                        <Button onClick={runCode} disabled={isCodeRunning} className={"m-3"}><PlayIcon />Run</Button>
+                        <Button onClick={runCode} disabled={isCodeRunning} className={"m-3"}><PlayIcon /> {isCodeRunning ? "Loading..." : "Run"}</Button>
                     </div>
                 </div>
                 <hr />
