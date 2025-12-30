@@ -52,7 +52,7 @@ export default function Cell({code}:{code:string}) {
     },[])
 
     const runCode = () => {
-        setOut([])
+        setOut(["Loading..."])
         setIsCodeRunning(true)
 
         const getCode = async () => {
@@ -65,15 +65,20 @@ export default function Cell({code}:{code:string}) {
                 body:JSON.stringify({"code":mgCode}),
             })
 
-            const json = await res.json();
+            if (res.ok) {
+                const json = await res.json();
 
-            console.log(json);
+                console.log(json);
 
-            const pycode = json.code;
+                const pycode = json.code;
 
-            const output = pyodide.runPython(pycode)
+                const output = pyodide.runPython(pycode)
 
-            console.log(output);
+                console.log(output);
+            } else {
+                setOut(["Syntax error! (Maybe you forgot a semicolon?) "]);
+            }
+
         }
 
         getCode();
@@ -95,6 +100,13 @@ export default function Cell({code}:{code:string}) {
             </div>
             <Editor
                 height={height}
+                className={""}
+                options={{
+                    scrollBeyondLastLine: false,
+                    scrollbar: {
+                        scrollByPage: true,
+                    }
+                }}
                 theme={"gh-light"}
                 language={"marigold"}
                 defaultValue={mgCode}
