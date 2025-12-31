@@ -1,100 +1,24 @@
-import {loadPyodide} from "pyodide";
 import Editor from "@monaco-editor/react";
-import {useEffect, useState} from "react";
 import '../styles/global.css'
 import {Button} from "@/components/ui/button.tsx";
 import {CodeIcon, PlayIcon} from "lucide-react";
 import {Spinner} from "@/components/ui/spinner.tsx";
+import {useEditor} from "@/hooks/useEditor.ts";
 
 export default function PlaygroundComponent() {
-    function registerLanguage(monaco: typeof import("monaco-editor")) {
-        monaco.languages.register({ id: "marigold" });
-
-        monaco.languages.setMonarchTokensProvider("marigold", {
-            tokenizer: {
-                root: [
-                    [/\b(def|defr|if|else|guard|module|use|alias|true|false|self|nil)\b/, "keyword"],
-                    [/\b(PAIR)\b/, "constant"],
-                    [/\d+/, "number"],
-                    [/"([^"\\]|\\.)*$/, "string.invalid"],
-                    [/"([^"\\]|\\.)*"/, "string"],
-                    [/#.*#/, "comment"],
-                    [/[{}()[\]]/, "@brackets"],
-                    [/[+\-*\/=<>!|]+/, "operator"],
-                    [/[a-zA-Z_]\w*/, "identifier"],
-                ]
-            }
-        });
-    }
-
-    const initialCode = `defr factorial(n) {
+    const defaultCode = `defr fibonacci(n) {
     # Calculate n! #
     
-    guard (n == 0) 1;
+    guard (n < 2) n;
     
-    n * (self (n--));
+    (self (n - 1)) + (self (n - 2));
 }
 
-putint (factorial 5);`
+n = 10;
 
-    const [out,setOut] = useState<string[]>([]);
-    const [mgCode,setMgCode] = useState(initialCode);
-    const [pyodide,setPyodide] = useState<any>();
-    const [isCodeRunning,setIsCodeRunning] = useState<boolean>(false);
+putint (fibonacci n);`
 
-    useEffect(() => {
-        const initPyodide = async () => {
-            const p = await loadPyodide({
-                indexURL: "https://cdn.jsdelivr.net/pyodide/v0.29.0/full/",
-                stdout: (text) => setOut(out.concat([text])),
-                stderr: (text) => setOut(out.concat([text])),
-                stdin: () => prompt(out[-1])
-            });
-
-            setPyodide(p)
-        }
-
-        initPyodide();
-    },[])
-
-    const runCode = () => {
-        setOut([])
-
-
-        const getCode = async () => {
-            setIsCodeRunning(true)
-
-            const res = await fetch(import.meta.env.PUBLIC_SERVER_URL,{
-                method:"POST",
-                mode:"cors",
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body:JSON.stringify({"code":mgCode}),
-            })
-
-            if (res.ok) {
-                const json = await res.json();
-
-                console.log(json);
-
-                const pycode = json.code;
-
-                const output = pyodide.runPython(pycode)
-
-                if (output) {}
-
-                console.log(output);
-            } else {
-                setOut(["Syntax error! (Maybe you forgot a semicolon?) "]);
-            }
-
-            setIsCodeRunning(false)
-        }
-
-        getCode();
-
-    }
+    const {runCode, isCodeRunning, registerLanguage, height, mgCode, setMgCode, out} = useEditor(defaultCode);
 
     return (
         <div className="grid grid-cols-2">
