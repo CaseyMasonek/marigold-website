@@ -4,6 +4,7 @@ import {useEffect, useState} from "react";
 import '../styles/global.css'
 import {Button} from "@/components/ui/button.tsx";
 import {PlayIcon} from "lucide-react";
+import {Spinner} from "@/components/ui/spinner.tsx";
 
 export default function Cell({code}:{code:string}) {
     function registerLanguage(monaco: typeof import("monaco-editor")) {
@@ -53,9 +54,10 @@ export default function Cell({code}:{code:string}) {
 
     const runCode = () => {
         setOut([])
-        setIsCodeRunning(true)
+
 
         const getCode = async () => {
+            setIsCodeRunning(true)
             const res = await fetch(import.meta.env.PUBLIC_SERVER_URL, {
                 method:"POST",
                 mode:"cors",
@@ -79,10 +81,10 @@ export default function Cell({code}:{code:string}) {
                 setOut(["Syntax error! (Maybe you forgot a semicolon?) "]);
             }
 
+            setIsCodeRunning(false)
         }
 
         getCode();
-        setIsCodeRunning(false)
     }
 
     return (
@@ -96,7 +98,7 @@ export default function Cell({code}:{code:string}) {
                     className={"m-3"}>
 
 
-                    <PlayIcon size={8} /> {isCodeRunning ? "Loading..." : "Run"}
+                     {isCodeRunning ? <><Spinner /> Loading...</> : <><PlayIcon size={8} />Run</>}
                 </Button>
             </div>
             <Editor

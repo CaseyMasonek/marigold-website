@@ -4,6 +4,7 @@ import {useEffect, useState} from "react";
 import '../styles/global.css'
 import {Button} from "@/components/ui/button.tsx";
 import {CodeIcon, PlayIcon} from "lucide-react";
+import {Spinner} from "@/components/ui/spinner.tsx";
 
 export default function PlaygroundComponent() {
     function registerLanguage(monaco: typeof import("monaco-editor")) {
@@ -31,7 +32,7 @@ export default function PlaygroundComponent() {
     
     guard (n == 0) 1;
     
-    n * (self n--);
+    n * (self (n--));
 }
 
 putint (factorial 5);`
@@ -57,10 +58,12 @@ putint (factorial 5);`
     },[])
 
     const runCode = () => {
-        setOut(["Loading..."])
-        setIsCodeRunning(true)
+        setOut([])
+
 
         const getCode = async () => {
+            setIsCodeRunning(true)
+
             const res = await fetch(import.meta.env.PUBLIC_SERVER_URL,{
                 method:"POST",
                 mode:"cors",
@@ -85,10 +88,12 @@ putint (factorial 5);`
             } else {
                 setOut(["Syntax error! (Maybe you forgot a semicolon?) "]);
             }
+
+            setIsCodeRunning(false)
         }
 
         getCode();
-        setIsCodeRunning(false)
+
     }
 
     return (
@@ -112,7 +117,9 @@ putint (factorial 5);`
                         <h1 className={"text-2xl inline align-middle"}>Playground</h1>
                     </div>
                     <div className={"inline"}>
-                        <Button onClick={runCode} disabled={isCodeRunning} className={"m-3"}><PlayIcon /> {isCodeRunning ? "Loading..." : "Run"}</Button>
+                        <Button onClick={runCode} disabled={isCodeRunning} className={"m-3 w-35"}>
+                            {isCodeRunning ? <><Spinner /> Loading...</> : <><PlayIcon size={8} />Run</>}
+                        </Button>
                     </div>
                 </div>
                 <hr />
