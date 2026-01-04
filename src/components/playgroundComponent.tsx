@@ -47,7 +47,7 @@ putint (fibonacci n);`
                     </div>
                 </div>
                 <hr />
-                <div className={"p-3"}>
+                <div className={"p-3 h-[calc(100vh-8rem)] overflow-y-auto"}>
                     {out.map((item,index) => (<p>{item}</p>))}
                 </div>
             </div>
