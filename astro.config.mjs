@@ -17,17 +17,13 @@ export default defineConfig({
     plugins: [tailwindcss()],
     optimizeDeps: {
       exclude: ["pyodide"]
+    },
+    resolve: {
+      alias: {
+        '@/': './src',
+      }
     }
   },
 
-  integrations: [react(), starlight({
-      'title': 'Marigold',
-      plugins: [
-          starlightDocSearch({
-              appId: process.env.ALGOLIA_APP_ID ?? "",
-              apiKey: process.env.ALGOLIA_API_KEY ?? "",
-              indexName: process.env.ALGOLIA_INDEX_NAME ?? "",
-          }),
-      ]
-  }),mdx()]
+  integrations: [react(), mdx()]
 });

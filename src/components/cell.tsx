@@ -6,7 +6,7 @@ import {Spinner} from "@/components/ui/spinner.tsx";
 import {useEditor} from "@/hooks/useEditor.ts";
 
 export default function Cell({code}:{code:string}) {
-    const {runCode, isCodeRunning, registerLanguage, height, mgCode, setMgCode, out} = useEditor(code)
+    const {runCode, isCodeRunning, registerLanguage, height, mgCode, setMgCode, out, theme} = useEditor(code)
 
     return (
         <div className="w-[40%] border-2 rounded-lg m-3">
@@ -31,7 +31,7 @@ export default function Cell({code}:{code:string}) {
                         scrollByPage: true,
                     }
                 }}
-                theme={"gh-light"}
+                theme={theme == "dark" ? "hc-black" : "vs-light"}
                 language={"marigold"}
                 defaultValue={mgCode}
                 onMount={(editor,monaco) => {

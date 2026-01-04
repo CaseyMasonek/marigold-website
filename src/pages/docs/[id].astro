@@ -17,7 +17,7 @@ const {Content, headings} = await render(docPage)
 
 <DocsLayout>
     <div class="flex flex-row">
-        <div class="w-[20%] overflow-scroll sticky top-16 h-[calc(100dvh-4rem)] bg-accent p-5 prose">
+        <div class="w-[20%] overflow-y-auto sticky top-16 h-[calc(100dvh-4rem)] bg-accent p-5 prose dark:prose-invert dark:bg-primary-foreground">
             <h3>On this page</h3>
             {headings.map(heading => (
                     <ListItem depth={heading.depth}>
@@ -25,7 +25,7 @@ const {Content, headings} = await render(docPage)
                     </ListItem>
             ))}
         </div>
-        <div class="p-5 grow overflow-scroll">
+        <div class="p-5 grow overflow-y-auto">
             <Content />
         </div>
     </div>

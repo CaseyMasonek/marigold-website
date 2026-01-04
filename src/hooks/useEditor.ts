@@ -1,5 +1,7 @@
 import {useEffect, useState} from "react";
 import {loadPyodide} from "pyodide";
+import {useStore} from "@nanostores/react";
+import {$theme} from "@/store/theme.ts";
 
 export const useEditor = (code:string) => {
     function registerLanguage(monaco: typeof import("monaco-editor")) {
@@ -9,7 +11,7 @@ export const useEditor = (code:string) => {
             tokenizer: {
                 root: [
                     [/\b(def|defr|if|else|guard|module|use|alias|self|true|false|nil)\b/, "keyword"],
-                    [/\b(PAIR)\b/, "constant"],
+                    [/\b(RANGE)\b/, "constant"],
                     [/\d+/, "number"],
                     [/"([^"\\]|\\.)*$/, "string.invalid"],
                     [/"([^"\\]|\\.)*"/, "string"],
@@ -82,5 +84,7 @@ export const useEditor = (code:string) => {
         getCode();
     }
 
-    return {height,runCode,isCodeRunning,mgCode,out,setMgCode,registerLanguage};
+    const theme = useStore($theme)
+
+    return {height,runCode,isCodeRunning,mgCode,out,setMgCode,registerLanguage,theme};
 }

@@ -18,14 +18,14 @@ n = 10;
 
 putint (fibonacci n);`
 
-    const {runCode, isCodeRunning, registerLanguage, height, mgCode, setMgCode, out} = useEditor(defaultCode);
+    const {runCode, isCodeRunning, registerLanguage, mgCode, setMgCode, out, theme} = useEditor(defaultCode);
 
     return (
         <div className="grid grid-cols-2">
             <div className={'m-3'}>
                 <Editor
                     height={'90vh'}
-                    theme={"gh-light"}
+                    theme={theme == "dark" ? "hc-black" : "vs-light"}
                     language={"marigold"}
                     defaultValue={mgCode}
                     onMount={(editor,monaco) => {

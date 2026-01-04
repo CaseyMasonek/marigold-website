@@ -1,11 +1,11 @@
 ---
-import '@docsearch/css';
+import "@docsearch/css"
 
 const {
     PUBLIC_ALGOLIA_APP_ID,
     PUBLIC_ALGOLIA_API_KEY,
     PUBLIC_ALGOLIA_INDEX_NAME,
-} = import.meta.env;
+} = import.meta.env
 ---
 
 <div
@@ -16,17 +16,31 @@ const {
 ></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@docsearch/js@4"></script>
-<script is:inline defer type="module">
+<script>
+    import {$theme} from "@/store/theme";
+    import docsearch from "@docsearch/js";
+
     const el = document.getElementById('docsearch');
 
+    $theme.subscribe((theme) => {
+        console.log(theme);
+
+        docsearch({
+            container: '#docsearch',
+            appId: el.dataset.appId,
+            apiKey: el.dataset.apiKey,
+            indexName: el.dataset.indexName,
+            theme: theme === "dark" ? "dark" : "light",
+        });
+    })
+
     docsearch({
-        container: '#docsearch',
+        container: "#docsearch",
         appId: el.dataset.appId,
         apiKey: el.dataset.apiKey,
         indexName: el.dataset.indexName,
-
-        searchParameters: {
-        }
+        theme: document.documentElement.classList.contains("dark")
+            ? "dark"
+            : "light",
     });
-
 </script>
