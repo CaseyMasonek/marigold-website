@@ -1,0 +1,24 @@
+---
+title: Variables
+---
+
+# Variables
+
+Variables are used to assign values in Marigold. Unlike other languages,
+variables in marigold do not store data. They act more like a nickname.
+So if you use `ask` to get user value, set it as a variable, and use it
+twice, it will ask the user twice. This is by design. Marigold is meant
+to be as faithful to lambda calculus as possible. This means to have to be creative
+and use lambda calculus patterns in your code.
+
+Every variable is immutable. This means that there are no in-place operations. However, you
+can make something similar by using `|=`.
+
+## Usage
+
+`[variable name] = [variable value];`
+
+## See also
+
+- [Operators](/docs/operators)
+- [Booleans](/docs/booleans)

@@ -1,0 +1,111 @@
+---
+title: Booleans
+---
+
+# Booleans
+
+Booleans are the foundation of lambda calculus. They represent the values
+true and false.
+
+## true
+
+`true` (or `TRUE` using the builtin function naming convention) is a function
+that takes in two arguments, and returns the first.
+
+### Lambda Calculus representation
+
+`@ab.a`
+
+## false
+
+Similarly, `false` (or `FALSE` using the builtin function naming convention) is a function
+that takes in two arguments, and returns the *second*.
+
+### Lambda Calculus representation
+
+`@ab.b`
+
+(Note that this is the same a `0` and `nil`)
+
+## Usage
+
+The reason that booleans take in two arguments and return one of them is because that
+behaviour lends itself nicely to if statements.
+
+This means that you can set up an small conditional like this:
+
+`[condition] [value if true] [value if false]`
+
+This works, because if the condition is true, it will (because of its definition)
+take in the two arguments and return the first, which in this case, it `[value if true]`
+
+By the same logic, if `[condition]` is false, it will take in both `[value if true]` and
+`[value if false]`, and return the second, which in this case is `[value if false]`.
+
+## Boolean Functions
+
+### AND
+
+`AND` takes in two booleans, and only returns `true` if both are true. Otherwise,
+it returns `false`
+
+#### Usage
+
+`AND [bool 1] [bool 2]`
+or `[bool 1] && [bool 2]`
+
+#### Lambda Calculus
+
+`@ab.a b false`
+
+### OR
+
+`OR` takes in two booleans, and returns `true` if at least one is true. Otherwise,
+it returns `false`
+
+#### Usage
+
+`OR [bool 1] [bool 2]`
+or `[bool 1] || [bool 2]`
+
+#### Lambda Calculus
+
+`@ab.a true b`
+
+### NOT
+
+`NOT` takes in a boolean, and returns its opposite (e.g. not true == false)
+
+#### Usage
+
+`NOT [bool]`
+
+#### Lambda Calculus
+
+`@b.b false true`
+
+### IF
+
+`IF` takes in a condition and two value, and if the condition is true, it returns
+the first. Otherwise, it returns the second.
+
+#### Usage
+
+`IF [condition] [value if true] [value if false]`
+
+You may have noticed that the `IF`, is redundant here, since the same
+effect can be achieved with just
+
+`[condition] [value if true] [value if false]`
+
+However, it does help with readability, and becomes much easier to use in [pipelines](/docs/pipelines).
+If you are not using a pipeline, use the [if](/docs/if) keyword instead.
+
+#### Lambda Calculus
+
+`@cxy.c x y`
+
+## See also
+
+- [If statements](/docs/if)
+- [Guards](/docs/guards)

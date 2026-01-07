@@ -1,0 +1,74 @@
+---
+title: Pairs
+---
+
+import Cell from '@/components/cell'
+
+# Pairs
+
+Pairs are datatypes in Marigold that hold two values. They are useful for recursive functions
+and folds, and are easier to use than two item lists.
+
+## Usage
+
+Pairs are created by putting two comma seperated items in parentheses.
+
+`([item 1],[item 2])`
+
+Or, using the builtin function notation:
+
+`PAIR [item 1] [item 2]`
+
+(This should only be used in pipelines if at all)
+
+## Lambda Calculus representation
+
+`@xy.@b.b x y`
+
+Notice that it returns a function that takes in a [boolean](/docs/booleans)
+and plugs the two items in the pair into the boolean. This is because true
+is a function that takes in two items and returns the first, and false takes in
+two items and returns the second. This means that you use booleans to index pairs.
+
+<Cell code={`mypair = ("first","second");
+
+# Using true to get the first item #
+first = mypair true;
+put first;
+
+# Using false to get the second item #
+second = mypair false;
+put second;`} client:only={"react"} />
+
+## Pair functions
+
+### FIRST
+
+`FIRST` takes in a pair and returns the first item. This is preferable to using
+`true` to index a pair, since it's both more readable, and pipeline compatible.
+
+#### Usage
+
+`FIRST [pair]`
+
+#### Lambda Calculus
+
+`@p.p true`
+
+### SECOND
+
+Similarly, `SECOND` takes in a pair and returns the second item. This is preferable to using
+`false` to index a pair, since it's both more readable, and pipeline compatible.
+
+#### Usage
+
+`SECOND [pair]`
+
+#### Lambda Calculus
+
+`@p.p false`
+
+## See also
+
+- [Booleans](/docs/booleans)
+- [Numbers](/docs/numbers)
