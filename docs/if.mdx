@@ -34,15 +34,35 @@ Alternatively, either multiline expression can be replaced by a single expressio
 
 `if ([condition])  [value] else [value]`
 
+## elif
+
+Elif (short for else if) can be used to create if statements with more than one condition.
+
+This means that
+
+``
+if (condition1) value1 else {
+ if (condition2) value2 else value3
+}
+``
+
+can be shortened to
+
+``if (condition1) value1 elif (condition2) value2 else value3``
+
+
 ## Example
 
 <Cell code={`def isAdult(age) {
-    if (age < 18) "kid" else {
-        if (age < 65) "adult" else "senior"
-    }
+    if (age < 12) "kid"
+    elif (age < 18) "teen"
+    elif (age < 65) "adult"
+    else "senior"
 }
 
-put (isAdult 25);`} client:only={"react"} />
+age = 16;
+
+put (isAdult age);`} client:only={"react"} />
 
 ## See also
 

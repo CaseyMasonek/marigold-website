@@ -71,9 +71,14 @@ export const useEditor = (code:string) => {
 
                 const pycode = json.code;
 
-                const output = pyodide.runPython(pycode)
+                try {
+                    const output = pyodide.runPython(pycode)
+                    console.log(output);
+                } catch (error:any) {
+                    setOut([error.message]);
+                }
 
-                console.log(output);
+
             } else {
                 setOut(["Syntax error! (Maybe you forgot a semicolon?) "]);
             }

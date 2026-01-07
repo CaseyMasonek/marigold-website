@@ -39,7 +39,9 @@ export default function Cell({code}:{code:string}) {
                 }}
                 onChange={(e) => setMgCode(e ?? "")} />
             <hr className="" />
-            {out.map((item,index) => (<p className={"m-3 mb-2 mt-3"}>{item}</p>))}
+            <div className={""}>
+                {out.map((item,index) => (<p className={"m-3 mb-2 mt-3"}>{item}</p>))}
+            </div>
         </div>
     )
 }
