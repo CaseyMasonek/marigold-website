@@ -10,6 +10,21 @@ import {ArrowDownToLineIcon} from "lucide-react";
             <h1 class="text-3xl">Installation Guide</h1>
         </div>
         <br />
-        <p>Lorem ipsum</p>
+        <div>
+            <h2 class="text-xl">1) Ensure pipx is installed</h2>
+            <p>Marigold uses pipx to install the CLI globally. You can find the installation
+            instructions
+            <a href="https://pipx.pypa.io/stable/installation/" class="text-blue-700 not-hover:underline">
+                here</a>.</p>
+
+            <h2 class="text-xl mt-5">Run this command to install it locally</h2>
+            <div class="prose prose-pre:bg-accent prose-pre:text-foreground mt-3">
+                <pre class=""><code>git clone https://github.com/CaseyMasonek/marigold.git
+cd marigold
+pipx install .
+pipx inject marigold lark</code></pre>
+            </div>
+
+        </div>
     </div>
 </MainLayout>
