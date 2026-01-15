@@ -1,0 +1,222 @@
+---
+title: Numbers
+---
+
+import Cell from "../src/components/cell.tsx";
+
+# Numbers
+
+Numbers in Marigold are represented using [Church Numerals](https://en.wikipedia.org/wiki/Church_encoding#Church_numerals).
+They represent *natural numbers*, meaning there are only positive numbers, with no decimals.
+
+## Lambda calculus representation
+
+To represent a number `n`, you create a lambda that takes in a function `f` and value `x`,
+and then apply f to x n times.
+
+<Cell code={`zero = @fx.x;
+one = @fx.f x;
+two = @fx.f (f x);
+three = @fx.f (f (f x));
+# and so on... #
+
+# print them out #
+MAPL [zero,one,two,three] putint;`} client:only={'react'} />
+
+## Number functions
+
+### SUCC
+`SUCC` (short for successor) is a function that takes a number, and adds one to it.
+
+#### Usage
+`SUCC [number]`
+
+or more commonly
+
+`[number]++`
+
+#### Lambda calculus
+
+`@n.f (n f x)`
+
+### ADD
+`ADD` is a function that takes in two numbers and returns their sum.
+
+#### Usage
+`ADD [number] [number]`
+
+or more commonly
+
+`[number] + [number]`
+
+#### Lambda calculus
+
+`@mn.@fx.m f (n f x)`
+
+### PRED
+`PRED` (short for predecessor) is a function that takes in a number and subtracts one.
+
+#### Usage
+`PRED [number]`
+
+or more commonly
+
+`[number]--`
+
+#### Lambda calculus
+
+`PRED` uses [pairs](/docs/pairs) to work
+
+`@n.SECOND (n Φ (PAIR 0 0))`
+
+where `Φ = @p.PAIR (SUCC (SECOND p)) (SECOND p)`
+
+### SUB
+`SUB` (short for subtract) is a function that takes in a number and subtracts one.
+
+#### Usage
+`SUB [number] [number]`
+
+or more commonly
+
+`[number] - [number]`
+
+#### Lambda calculus
+
+`@mn.n PRED m`
+
+### ISZERO
+`ISZERO` takes in a number and determines if it is equal to zero
+
+#### Usage
+`ISZERO [number]`
+
+#### Lambda calculus
+
+`@n.n (@x.false) true`
+
+### EQ
+`EQ` (short for equals) is a function that determines if two numbers are equal
+
+#### Usage
+`EQ [number] [number]`
+
+or more commonly
+
+`[number] == [number]`
+
+#### Lambda calculus
+
+`@mn.AND (ISZERO (SUB a b)) (ISZERO (SUB b a))`
+
+### LT
+`LT` (short for less than) determines if one number is less than another
+
+#### Usage
+`LT [number] [number]`
+
+or more commonly
+
+`[number] < [number]`
+
+#### Lambda calculus
+
+`@mn.AND (ISZERO (SUB a b)) (NOT (ISZERO (SUB b a)))`
+
+### LTE
+`LTE` (short for less than or equal to) determines if one number is less than or equal to another
+
+#### Usage
+`LTE [number] [number]`
+
+or more commonly
+
+`[number] <= [number]`
+
+#### Lambda calculus
+
+`@mn.(ISZERO (SUB a b))`
+
+### GT
+`GT` (short for greater than) determines if one number is greater than another
+
+#### Usage
+`GT [number] [number]`
+
+or more commonly
+
+`[number] > [number]`
+
+#### Lambda calculus
+
+`@mn.AND (NOT (ISZERO (SUB a b))) (ISZERO (SUB b a))`
+
+### GTE
+`GTE` (short for greater than or equal to) determines if one number is greater than or equal to another
+
+#### Usage
+`GTE [number] [number]`
+
+or more commonly
+
+`[number] >= [number]`
+
+#### Lambda calculus
+
+`@mn.(ISZERO (SUB b a))`
+
+### MULT
+`MULT` (short for multiply) is a function that multiplies two numbers
+
+#### Usage
+`MULT [number] [number]`
+
+or more commonly
+
+`[number] * [number]`
+
+#### Lambda calculus
+
+`@mn.m (ADD n) 0`
+
+### DIV
+`DIV` (short for divide) is a function that floor divides one number by another.
+
+#### Usage
+`DIV [number] [number]`
+
+or more commonly
+
+`[number] // [number]`
+
+#### Lambda calculus
+
+`@ab.FIRST (a (@p.EQ (SECOND p) (PRED b)
+(PAIR (SUCC (FIRST p)) 0)
+(PAIR (FIRST p) (SUCC (SECOND p)))
+) (PAIR 0 0))`
+
+### MOD
+`MOD` (short for modulo) is a function that returns one number mod another.
+
+#### Usage
+`MOD [number] [number]`
+
+or more commonly
+
+`[number] % [number]`
+
+#### Lambda calculus
+
+`@ab.SECOND (a (@p.EQ (SECOND p) (PRED b)
+(PAIR (SUCC (FIRST p)) 0)
+(PAIR (FIRST p) (SUCC (SECOND p)))
+(PAIR 0 0)))
+`
+
+(Notice how the only difference between div and mod is that the inner function returns a pair that they access
+different elements of. That's because the pair is the quotient first and the remainder second)
+
+## See also
+- [Pairs](/docs/pairs)
+- [Lists](/docs/lists)
