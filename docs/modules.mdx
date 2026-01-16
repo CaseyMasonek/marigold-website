@@ -1,0 +1,122 @@
+---
+title: Modules
+---
+
+import Cell from "../src/components/cell.tsx";
+
+# Modules
+
+Modules in Marigold represent datatypes. They act like the functional version of an object-oriented
+class.
+
+## The `module` keyword
+
+Modules are defined by using the `module` keyword.
+
+Modules may contain
+- Comments
+- Functions
+- Recursive functions
+- Variables
+
+Items in modules are accessed like: `[module name].[module item name]`
+
+### Example
+
+<Cell code={`module Greeter {
+    def Greet(name) {
+        put "Hi, " \<\> name \<\> "!";
+    }
+
+    def GreetPolitely(name) {
+        put "Salutations, " \<\> name \<\> "!";
+    }
+}
+
+Greeter.Greet "Alice";
+Greeter.GreetPolitely "Bob";`} client:only={'react'} />
+
+## The `Cons` function
+
+`Cons` (short for constructor) is used to initialize "objects" in Marigold. It can be called
+both with `[module name].Cons` or simply with `[module name]`.
+
+### Example
+
+<Cell code={`module Person {
+    def Cons(name,age) {
+        (name,age);
+    }
+
+    def GetName(person) {
+        FIRST person;
+    }
+
+    def Greet(person) {
+        name = GetName person;
+
+        put "Hi, " \<\> name \<\> "!";
+    }
+
+    def SayAge(person) {
+        age = SECOND person;
+        putint age;
+    }
+}
+
+harrison = Person "Harrison" 17;
+
+Person.Greet harrison;
+Person.SayAge harrison;`} client:only={'react'} />
+
+## Unpacking
+
+Sometimes, you don't want to say the module name everytime you access a module item. In this case,
+you can use the `unpack` keyword
+
+<Cell code={`module Greeter {
+    def Greet(name) {
+        put "Hi, " \<\> name \<\> "!";
+    }
+
+    def GreetPolitely(name) {
+        put "Salutations, " \<\> name \<\> "!";
+    }
+}
+
+unpack Greeter;
+
+# Simply use "Greet" instead of "Greeter.Greet" #
+Greet "Alice";
+GreetPolitely "Bob";`} client:only={'react'} />
+
+## Importing
+
+In Marigold, you may import modules from other files. To do so, you must name the file identically to the name
+of the modules. So, if you want to import an Employee module, it must be in `employee.mg`.
+
+Modules may be in different folders than the script you are importing it into. In this case, put the name of the
+directory at the start, followed by a .
+
+For example if you have a project with a `myproject/main.mg` file and a `myproject/modules/employee.mg` file, to access
+the Employee module from main.mg, at the top of your file put `import Modules.Employee;`.
+
+The `Packages` directory has an alias (`$`), meaning if you'd like to access `myproject/packages/employee.mg`, simply
+type `import $Employee;`.
+
+### importall
+
+The problem with the current setup is that sufficiently large scripts will begin with a wall of imports followed
+by a wall of unpacks, to use the imported modules. To import a module, and then to unpack it, use the `importall`
+keyword.
+
+`importall Employee;`
+
+achieves the same result as
+
+`import Employee;
+unpack Employee;`
+
+## See also
+- [Variables](/docs/variables)
+- [Functions](/docs/functions)

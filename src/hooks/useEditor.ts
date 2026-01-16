@@ -10,8 +10,7 @@ export const useEditor = (code:string) => {
         monaco.languages.setMonarchTokensProvider("marigold", {
             tokenizer: {
                 root: [
-                    [/\b(def|defr|if|else|guard|module|use|alias|self|true|false|nil|elif)\b/, "keyword"],
-                    [/\b(RANGE)\b/, "constant"],
+                    [/\b(def|defr|if|else|guard|module|alias|self|true|false|nil|elif|import|importall|unpack)\b/, "keyword"],
                     [/\d+/, "number"],
                     [/"([^"\\]|\\.)*$/, "string.invalid"],
                     [/"([^"\\]|\\.)*"/, "string"],

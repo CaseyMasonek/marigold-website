@@ -67,6 +67,12 @@ const buttons = [
         drawSVG: false,
         duration: 2,
     })
+
+    ScrollTrigger.create({
+        trigger: ".first",
+        start: "top top",
+        end: "bottom top",
+    })
 </script>
 
 <style lang="sass">
@@ -76,7 +82,7 @@ const buttons = [
 
 <div class="h-screen w-full flex justify-center items-center">
     <div class="flex flex-col justify-center items-center">
-    <div class="items-center flex flex-col">
+    <div class="items-center flex flex-col first">
         <h1 class="text-7xl font-logo font-black mb-1" id="title">Marigold</h1>
         <h2 class="text-xl opacity-0 after-title">cool tagline</h2>
     </div>
