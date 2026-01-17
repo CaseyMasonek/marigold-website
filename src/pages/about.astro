@@ -5,11 +5,54 @@ import {Sparkles} from "lucide-react";
 
 <MainLayout>
     <div class="">
-        <div class="flex items-center gap-x-1 p-3">
-            <Sparkles className="inline" />
-            <h1 class="text-3xl">About</h1>
+        <div class="flex items-center gap-x-1 p-3 w-full">
+            <h1 class="text-3xl font-semibold">About the language</h1>
         </div>
+        <div class="w-full p-3">
+            <h2 class="text-xl font-semibold">Faithful to Lambda Calculus</h2>
+            <p class="max-w-[65ch] mt-3">
+                Marigold aims to preserve the patterns found in lambda calculus. It doesn't
+                want to be a completely new language, but instead a helping hand for lambda
+                calculus.
 
+                This means preserving
+            </p>
+            <div class="prose">
+                <ul class="">
+                    <li>
+                        Existing patterns, such as fixed point recursion
+                    </li>
+                    <li>
+                        Church encodings
+                    </li>
+                    <li>
+                        All logic in lambda calculus
+                    </li>
+                    <li>
+                        etc.
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="w-full p-3 bg-accent">
+            <h2 class="text-xl font-semibold">Human-Friendly</h2>
+            <p class="max-w-[65ch] mt-3">
+                We are not computers, or robots, or aliens. We don't want to write <br /><br />
 
+                <code>(λmn.λgy.m g (n g y)) (λfx.f x) (λfx.f x)</code> <br /><br /> to calculate 1 + 1.
+                So, Marigold sacrificed some "faithfulness" for readability. For example,
+                operators like addition don't follow the <code>function argument argument</code> pattern,
+                but make it both easier to read and write.
+            </p>
+        </div>
+        <div class="w-full p-3">
+            <h2 class="text-xl font-semibold">Lightweight</h2>
+            <p class="max-w-[65ch] mt-3">
+                Some languages are more robust than others. And that's great! Putting 20 different
+                keywords before a variable assignment can absolutely be useful sometimes. Marigold
+                is not one of those languages. Any boilerplate gets cut, for a simple, quick coding
+                experience.
+            </p>
+        </div>
     </div>
 </MainLayout>
